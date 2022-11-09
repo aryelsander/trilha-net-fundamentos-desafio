@@ -1,25 +1,19 @@
 ﻿using DesafioFundamentos.Models;
 
-// Coloca o encoding para UTF8 para exibir acentuação
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-decimal precoInicial = 0;
-decimal precoPorHora = 0;
+decimal precoInicial;
+decimal precoPorHora;
 
-Console.WriteLine("Seja bem vindo ao sistema de estacionamento!\n" +
-                  "Digite o preço inicial:");
-precoInicial = Convert.ToDecimal(Console.ReadLine());
+Console.WriteLine("Seja bem vindo ao sistema de estacionamento!");
+precoInicial = GetDecimalInput("Digite o preço inicial: ", "Valor Inválido, Tente novamente!");
 
-Console.WriteLine("Agora digite o preço por hora:");
-precoPorHora = Convert.ToDecimal(Console.ReadLine());
+precoPorHora = GetDecimalInput("Agora digite o preço por hora: ", "Valor Inválido, Tente novamente!");
 
-// Instancia a classe Estacionamento, já com os valores obtidos anteriormente
-Estacionamento es = new Estacionamento(precoInicial, precoPorHora);
+Estacionamento es = new (precoInicial, precoPorHora);
 
-string opcao = string.Empty;
 bool exibirMenu = true;
 
-// Realiza o loop do menu
 while (exibirMenu)
 {
     Console.Clear();
@@ -56,4 +50,20 @@ while (exibirMenu)
     Console.ReadLine();
 }
 
+
+static decimal GetDecimalInput(string message,string errorMessage)
+{
+    bool success;
+    decimal result;
+    do
+    {
+        Console.Write(message);
+        success = decimal.TryParse(Console.ReadLine(), out result);
+        if (!success)
+        {
+            Console.WriteLine(errorMessage);
+        }
+    } while (!success);
+    return result;
+}
 Console.WriteLine("O programa se encerrou");
